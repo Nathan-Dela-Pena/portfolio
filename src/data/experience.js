@@ -32,9 +32,9 @@ export const EXPERIENCE = [
     place: "Las Vegas, NV",
     dates: "Oct 2024 — Jul 2025",
     bullets: [
-      "Configured and deployed 100+ Juniper and Cisco switches using Junos OS and Cisco IOS",
-      "Activated 400+ network ports to provide connectivity across campus",
-      "Documented 50+ IDF rooms and the fiber pathways connecting them",
+      "Configured and deployed 100+ Juniper and Cisco switches using Junos OS and Cisco IOS, supporting campus-wide network infrastructure upgrades",
+      "Activated and troubleshot 400+ network ports across campus buildings, restoring and provisioning connectivity for faculty, staff, and students",
+      "Documented 50+ IDF rooms and campus fiber pathways, mapping physical topology to streamline troubleshooting and future infrastructure planning",
     ],
   },
   {
