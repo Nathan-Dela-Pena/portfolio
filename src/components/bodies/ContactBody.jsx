@@ -3,8 +3,8 @@ import { PROFILE } from "../../data/profile.js";
 const CHANNELS = [
   ["Email", PROFILE.email, `mailto:${PROFILE.email}`],
   ["GitHub", PROFILE.github, `https://${PROFILE.github}`],
-  ["LinkedIn", PROFILE.linkedin, `https://${PROFILE.linkedin}`],
   ["Resume", "Download PDF", PROFILE.resume],
+  ["LinkedIn", PROFILE.linkedin, `https://${PROFILE.linkedin}`],
 ];
 
 export default function ContactBody() {
