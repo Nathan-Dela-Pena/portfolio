@@ -1,0 +1,25 @@
+:root {
+  --cork: #c99253;
+  --ink: #26303f;
+
+  /* Paper stocks — mirrored in tailwind.config.js so either system can reach
+     them. These are the ones applied dynamically by stock name. */
+  --paper: #fcfaf3;
+  --canary: #f2e06a;
+  --blush: #f3a5ad;
+  --sky: #a8c5ee;
+  --mint: #b4dcbe;
+  --peach: #f5c79a;
+  --lilac: #c9aee6;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  font-family: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
+  color: var(--ink);
+}

@@ -1,0 +1,120 @@
+/* A sheet of paper on the board. */
+.note {
+  position: relative;
+  transform: rotate(var(--rot, 0deg));
+  transition:
+    transform 0.3s cubic-bezier(0.2, 0.7, 0.3, 1),
+    box-shadow 0.3s ease;
+  box-shadow:
+    0 1px 1px rgba(60, 35, 10, 0.3),
+    0 12px 22px -9px rgba(50, 28, 8, 0.65);
+}
+/* The shadow the adhesive edge casts on itself. */
+.note::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 30px;
+  pointer-events: none;
+  background: linear-gradient(to top, rgba(90, 60, 20, 0.1), transparent);
+}
+.note:hover {
+  transform: rotate(calc(var(--rot, 0deg) * 0.3)) translateY(-8px) scale(1.015);
+  box-shadow:
+    0 2px 3px rgba(60, 35, 10, 0.28),
+    0 30px 46px -16px rgba(50, 28, 8, 0.7);
+  z-index: 30;
+}
+
+/* Stocks are applied by name at runtime, so they live here rather than as
+   Tailwind classes — a dynamic `bg-${stock}` would be purged at build time. */
+.stock-canary { background: var(--canary); }
+.stock-blush  { background: var(--blush); }
+.stock-sky    { background: var(--sky); }
+.stock-mint   { background: var(--mint); }
+.stock-peach  { background: var(--peach); }
+.stock-lilac  { background: var(--lilac); }
+.stock-paper {
+  background: var(--paper);
+  background-image: linear-gradient(rgba(120, 150, 190, 0.3) 1px, transparent 1px);
+  background-size: 100% 32px;
+}
+
+/* Declared after :hover on purpose. A lifted note must not keep tilting, and
+   equal specificity later in the sheet beats it without !important. */
+.note-flat,
+.note-flat:hover {
+  transform: none;
+}
+
+/* Fasteners */
+.pin {
+  position: absolute;
+  left: 50%;
+  top: 9px;
+  margin-left: -11px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 34% 28%, #fff 0 9%, rgba(255, 255, 255, 0.55) 20%, transparent 44%),
+    radial-gradient(circle at 50% 50%, var(--pin, #c8503c) 0 54%, rgba(0, 0, 0, 0.5) 100%);
+  box-shadow:
+    0 4px 6px rgba(50, 28, 8, 0.55),
+    inset 0 -1px 2px rgba(0, 0, 0, 0.4);
+}
+.tape {
+  position: absolute;
+  left: 50%;
+  top: -14px;
+  margin-left: -56px;
+  width: 112px;
+  height: 28px;
+  transform: rotate(-3deg);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.65), rgba(0, 0, 0, 0.06)), #e4decd;
+  opacity: 0.85;
+  box-shadow: 0 1px 3px rgba(50, 28, 8, 0.3);
+}
+
+/* A photo print tacked onto a note. Width is a percentage of the note so the
+   ratio holds at every zoom level; a fixed height would crop differently on
+   the board than it does in the lifted view. */
+.print {
+  position: relative;
+  background: #fbfaf6;
+  padding: 7px;
+  width: var(--print-w, 64%);
+  transform: rotate(var(--print-rot, 0deg));
+  box-shadow:
+    0 1px 2px rgba(50, 28, 8, 0.3),
+    0 9px 15px -8px rgba(50, 28, 8, 0.55);
+}
+.print img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* A polaroid, taped rather than pinned — a pin through the top border would
+   pierce the image, so the tape sits on the white margin instead. */
+.polaroid {
+  background: #fdfcf7;
+  padding: 13px 13px 0;
+}
+.polaroid img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.polaroid figcaption {
+  padding: 15px 4px 24px;
+  text-align: center;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .note,
+  .note:hover {
+    transition: none;
+    transform: rotate(var(--rot, 0deg));
+  }
+}

@@ -1,0 +1,12 @@
+/* Tailwind's own layers, with the board's styles slotted between them so
+   utilities always win. That ordering is what lets `mx-auto` on a print
+   override the component rules without either side needing !important. */
+@import "tailwindcss/base";
+@import "./styles/tokens.css";
+
+@import "tailwindcss/components";
+@import "./styles/board.css";
+@import "./styles/paper.css";
+@import "./styles/motion.css";
+
+@import "tailwindcss/utilities";

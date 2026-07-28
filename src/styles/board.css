@@ -1,0 +1,84 @@
+/* The wall the board hangs on. */
+.board-room {
+  background: radial-gradient(ellipse 90% 70% at 50% 0%, #f1ece1, #d6d0c2 75%, #c6bfb0);
+}
+
+/* Wooden frame. The repeating gradient is the grain. */
+.board-frame {
+  border-radius: 12px;
+  background:
+    repeating-linear-gradient(93deg, rgba(0, 0, 0, 0.08) 0 2px, transparent 2px 13px),
+    linear-gradient(145deg, #a87439 0%, #7e4e22 34%, #96612b 56%, #683d19 100%);
+  box-shadow:
+    0 50px 90px -34px rgba(60, 35, 10, 0.7),
+    inset 0 3px 0 rgba(255, 222, 172, 0.4),
+    inset 0 -4px 8px rgba(0, 0, 0, 0.45);
+}
+
+/* Cork. Fractal noise gives the granule speckle; the two radials light it
+   from the upper left the way a board on a wall actually reads. */
+.board-cork {
+  background-color: var(--cork);
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='c'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.62' numOctaves='5'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23c)' opacity='0.55'/%3E%3C/svg%3E"),
+    radial-gradient(ellipse at 28% 18%, rgba(255, 226, 180, 0.4), transparent 58%),
+    radial-gradient(ellipse at 78% 84%, rgba(116, 64, 20, 0.4), transparent 62%);
+  box-shadow: inset 0 0 46px rgba(88, 48, 14, 0.5);
+}
+
+/* The camera. One transform, one transition. */
+.board-stage {
+  transform-origin: 0 0;
+  transition: transform 0.72s cubic-bezier(0.22, 0.61, 0.36, 1);
+  will-change: transform;
+}
+
+.board-hit {
+  cursor: zoom-in;
+}
+.board-hit:focus-visible {
+  outline: 3px solid #fff;
+  outline-offset: -4px;
+}
+
+/* Header link: a highlighter swipe in the cluster's own paper colour, so the
+   nav tells you which colour to look for on the board. */
+.nav-link {
+  position: relative;
+}
+.nav-link > span {
+  position: relative;
+  z-index: 1;
+}
+.nav-link::before {
+  content: "";
+  position: absolute;
+  left: -7px;
+  right: -7px;
+  top: 34%;
+  bottom: 4%;
+  background: var(--hl);
+  border-radius: 2px;
+  transform: rotate(-0.8deg) scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.3s ease;
+  mix-blend-mode: multiply;
+}
+.nav-link-on::before {
+  transform: rotate(-0.8deg) scaleX(1);
+}
+
+.board-room a:focus-visible,
+.board-room button:focus-visible {
+  outline: 3px solid #2e5fa8;
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .board-stage {
+    transition: none;
+  }
+  .nav-link::before {
+    transition: none;
+  }
+}
