@@ -4,6 +4,7 @@
   max-height: 82vh;
   overflow-y: auto;
   transform-origin: 0 0;
+  padding-top: 16px;   /* room for the tape to overhang */
 }
 .lift-box-out {
   overflow: hidden;

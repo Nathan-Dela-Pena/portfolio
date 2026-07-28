@@ -2,6 +2,7 @@ import { useEffect, useLayoutEffect, useRef } from "react";
 import Pin from "./primitives/Pin.jsx";
 import { shellClass } from "../board/notes.js";
 import { ENTER_MS, EXIT_MS, wantsReducedMotion } from "../hooks/useLiftedNote.js";
+import Tape from "./primitives/Tape.jsx";
 
 /**
  * Maps the lifted card onto the note still pinned to the board: same top-left,
@@ -95,7 +96,8 @@ export default function LiftedNote({ note, closing, onClose }) {
         className={`lift-box relative w-full max-w-xl ${closing ? "lift-box-out" : ""}`}
       >
         <article className={`note note-flat ${shellClass(note, true)}`} style={{ "--rot": "0deg" }}>
-          {note.kind !== "photo" && <Pin tone={note.stock} />}
+          {note.tape && <Tape />}
+          {note.kind !== "photo" && <Pin tone={note.stock} />}  
           <Body data={note.data} />
         </article>
       </div>
