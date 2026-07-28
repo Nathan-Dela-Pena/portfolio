@@ -8,7 +8,7 @@ export const PROFILE = {
   github: "github.com/Nathan-Dela-Pena",
   linkedin: "linkedin.com/in/nathan-dela-pena-0461bb31b/",
   location: "Las Vegas, Nevada",
-  resume: "/public/Resume - Nathan Dela Pena_ web.pdf",
+  resume: "/Resume - Nathan Dela Pena_ web.pdf",
 };
 
 export const STATS = [
