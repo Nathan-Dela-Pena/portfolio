@@ -1,9 +1,9 @@
 import { PROFILE } from "../../data/profile.js";
 
 const CHANNELS = [
+  ["Resume", "View PDF", PROFILE.resume],
   ["Email", PROFILE.email, `mailto:${PROFILE.email}`],
   ["GitHub", PROFILE.github, `https://${PROFILE.github}`],
-  ["Resume", "Download PDF", PROFILE.resume],
   ["LinkedIn", PROFILE.linkedin, `https://${PROFILE.linkedin}`],
 ];
 

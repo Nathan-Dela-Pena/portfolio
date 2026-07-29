@@ -3,6 +3,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import Header from "./components/Header.jsx";
 import Board from "./components/Board.jsx";
 import LiftedNote from "./components/LiftedNote.jsx";
+import Shutter from "./components/Shutter.jsx";
 
 import useCamera from "./hooks/useCamera.js";
 import useLiftedNote from "./hooks/useLiftedNote.js";
@@ -19,6 +20,8 @@ export default function App() {
   const viewportRef = useRef(null);
   const [view, setView] = useState("overview");
   const [touched, setTouched] = useState(false);
+  /* The board starts behind the blind; nothing else listens until it's up. */
+  const [covered, setCovered] = useState(true);
 
   const camera = useCamera(viewportRef, TARGETS[view] || TARGETS.overview);
   const { openId, closing, lift, putBack } = useLiftedNote();
@@ -42,13 +45,13 @@ export default function App() {
 
   useEffect(() => {
     const onKey = (event) => {
-      if (event.key !== "Escape") return;
+      if (event.key !== "Escape" || covered) return;
       if (openId) putBack();
       else setView("overview");
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [openId, putBack]);
+  }, [openId, putBack, covered]);
 
   const lifted = openId ? noteById(openId) : null;
 
@@ -59,7 +62,7 @@ export default function App() {
       <div ref={viewportRef} className="relative flex-1 overflow-hidden">
         <Board camera={camera} onLift={handleLift} />
 
-        {!touched && (
+        {!touched && !covered && (
           <p className="pointer-events-none absolute bottom-4 left-1/2 -translate-x-1/2 rounded-sm bg-black/60 px-3 py-1.5 text-center font-mono text-xs uppercase tracking-widest text-white">
             Pick a section above, or tap a note to read it
           </p>
@@ -67,6 +70,8 @@ export default function App() {
       </div>
 
       {lifted && <LiftedNote note={lifted} closing={closing} onClose={putBack} />}
+
+      <Shutter onOpen={() => setCovered(false)} />
     </div>
   );
 }

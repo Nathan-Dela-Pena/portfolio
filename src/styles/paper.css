@@ -56,12 +56,14 @@
   width: 22px;
   height: 22px;
   border-radius: 50%;
+  /* Drawn to the favicon's proportions: a flat disc with one soft highlight
+     dot set 35% of the radius up and to the left, at 75% white. The favicon
+     has no rim shading, so neither does this — only the cast shadow, which
+     the board needs to read the pin as sitting above the paper. */
   background:
-    radial-gradient(circle at 34% 28%, #fff 0 9%, rgba(255, 255, 255, 0.55) 20%, transparent 44%),
-    radial-gradient(circle at 50% 50%, var(--pin, #c8503c) 0 54%, rgba(0, 0, 0, 0.5) 100%);
-  box-shadow:
-    0 4px 6px rgba(50, 28, 8, 0.55),
-    inset 0 -1px 2px rgba(0, 0, 0, 0.4);
+    radial-gradient(circle at 32.5% 32.5%, rgba(255, 255, 255, 0.75) 0 13%, rgba(255, 255, 255, 0) 17%),
+    var(--pin, #c8503c);
+  box-shadow: 0 3px 5px rgba(50, 28, 8, 0.5);
 }
 .tape {
   position: absolute;

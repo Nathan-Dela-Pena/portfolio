@@ -1,0 +1,175 @@
+/* The blind over the window the board hangs in.
+ *
+ * It raises like the real thing: the head stays put, the bottom rail travels
+ * up, and the board is revealed from the bottom edge. Everything reads off
+ * one custom property, --p, set from React: 0 is fully down, 1 is raised.
+ */
+.shutter {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  overflow: hidden;
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+  background: transparent;
+}
+.shutter-dragging {
+  cursor: grabbing;
+}
+.shutter:focus-visible {
+  outline: none;
+}
+.shutter:focus-visible .shutter-rail {
+  box-shadow:
+    inset 0 0 0 2px #f2e06a,
+    0 12px 26px -10px rgba(40, 25, 8, 0.7);
+}
+
+/* Slat stock: warm painted aluminium, lit from the top of each blade and
+   shadowed under its lower edge. The two faint verticals are the lift cords. */
+.shutter-slats {
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: calc((1 - var(--p)) * 100%);
+  background-color: #e7e0d1;
+  background-image:
+    linear-gradient(90deg, rgba(70, 55, 32, 0.16) 0 1.5px, transparent 1.5px),
+    linear-gradient(90deg, rgba(70, 55, 32, 0.16) 0 1.5px, transparent 1.5px),
+    repeating-linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.9) 0 2px,
+      rgba(255, 255, 255, 0.42) 2px 9px,
+      rgba(120, 98, 62, 0.06) 9px 22px,
+      rgba(96, 76, 44, 0.24) 22px 27px,
+      rgba(58, 44, 22, 0.34) 27px 29px
+    );
+  background-position:
+    22% 0,
+    78% 0,
+    0 0;
+  background-repeat: repeat-y, repeat-y, repeat;
+  box-shadow:
+    0 18px 34px -14px rgba(40, 25, 8, 0.55),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.5);
+  transition: height 0.95s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+.shutter-dragging .shutter-slats {
+  transition: none;
+}
+
+/* The weighted bottom rail, in the same walnut as the board's frame. */
+.shutter-rail {
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 15px;
+  background:
+    repeating-linear-gradient(93deg, rgba(0, 0, 0, 0.09) 0 2px, transparent 2px 13px),
+    linear-gradient(180deg, #a87439, #7e4e22 62%, #5d3714);
+  box-shadow: 0 8px 18px -6px rgba(40, 25, 8, 0.65);
+}
+
+/* Held at viewport height so the greeting stays optically still and the
+   rising rail wipes it away, rather than dragging it up the screen. */
+.shutter-greeting {
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 100vh;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: 26px;
+  padding: 0 24px;
+  text-align: center;
+  opacity: clamp(0, calc(1 - var(--p) * 1.7), 1);
+}
+
+/* Two lines, one at a time, crossfading through a blur — six seconds each
+   way. Stacked in the same grid cell so neither reserves the other's space. */
+.shutter-line {
+  grid-area: 1 / 1;
+  margin: 0;
+  max-width: 15ch;
+  font-family: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
+  font-weight: 200;
+  font-size: clamp(2rem, 7vw, 4.25rem);
+  line-height: 1.08;
+  letter-spacing: -0.025em;
+  text-wrap: balance;
+  color: #2a3341;
+  opacity: 0;
+  animation: shutter-greet 12s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+.shutter-line-b {
+  animation-delay: 6s;
+}
+
+@keyframes shutter-greet {
+  0% {
+    opacity: 0;
+    filter: blur(12px);
+    transform: translateY(10px);
+  }
+  8%,
+  40% {
+    opacity: 1;
+    filter: blur(0);
+    transform: translateY(0);
+  }
+  50%,
+  100% {
+    opacity: 0;
+    filter: blur(12px);
+    transform: translateY(-10px);
+  }
+}
+
+/* One chevron in the pin colour, nudging upward. The only instruction the
+   screen needs beyond the sentence itself. */
+.shutter-chevron {
+  grid-area: 2 / 1;
+  width: 22px;
+  height: 22px;
+  border-top: 2px solid #c8503c;
+  border-right: 2px solid #c8503c;
+  transform: rotate(-45deg);
+  animation: shutter-nudge 2.4s ease-in-out infinite;
+}
+
+@keyframes shutter-nudge {
+  0%,
+  100% {
+    transform: rotate(-45deg) translate(0, 0);
+    opacity: 0.55;
+  }
+  50% {
+    transform: rotate(-45deg) translate(4px, -4px);
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .shutter-slats {
+    transition: height 0.2s linear;
+  }
+  .shutter-line {
+    animation-timing-function: linear;
+  }
+  .shutter-chevron {
+    animation: none;
+    opacity: 0.8;
+  }
+  @keyframes shutter-greet {
+    0% {
+      opacity: 0;
+    }
+    8%,
+    40% {
+      opacity: 1;
+    }
+    50%,
+    100% {
+      opacity: 0;
+    }
+  }
+}
