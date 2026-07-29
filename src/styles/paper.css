@@ -97,6 +97,74 @@
   height: auto;
 }
 
+/* A keepsake — a poster, a ticket stub — tacked to the cork with nothing
+   under it. No paper, no mount, just the object and the shadow it casts. */
+.scrap img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+/* The bottom gradient reads as a curling paper edge, which an object tacked
+   flat to the board doesn't have. */
+.scrap::after {
+  content: none;
+}
+
+/* A keepsake trimmed to proportions its source image doesn't have — a poster
+   cut down to a stub. The crop is horizontal only: the box takes the ratio,
+   the image covers it at full height, and the side margins are what's lost. */
+.scrap-crop {
+  aspect-ratio: var(--crop);
+  overflow: hidden;
+}
+.scrap-crop img {
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+/* A keepsake cut out against transparency is its own silhouette. Giving it a
+   card's rectangular shadow would frame the cork showing through the die-cut
+   edges as if it were the object's own background, so the box is dropped and
+   the shadow is cast from the alpha channel instead. */
+.scrap-cutout,
+.scrap-cutout:hover {
+  background: transparent;
+  box-shadow: none;
+}
+.scrap-cutout img {
+  filter:
+    drop-shadow(0 1px 1px rgba(60, 35, 10, 0.35))
+    drop-shadow(0 10px 16px rgba(50, 28, 8, 0.5));
+}
+.scrap-cutout:hover img {
+  filter:
+    drop-shadow(0 2px 2px rgba(60, 35, 10, 0.32))
+    drop-shadow(0 24px 34px rgba(50, 28, 8, 0.55));
+}
+
+/* Lifted, a keepsake is sized by its height so a tall poster stays whole on
+   screen instead of scrolling inside the box. */
+.lift-box .scrap {
+  width: fit-content;
+  max-width: 100%;
+  margin-inline: auto;
+}
+.lift-box .scrap img {
+  width: auto;
+  max-width: 100%;
+  max-height: 74vh;
+}
+/* A cropped keepsake is sized by the box, not the image inside it. */
+.lift-box .scrap-crop {
+  height: 74vh;
+  width: auto;
+}
+.lift-box .scrap-crop img {
+  width: 100%;
+  max-height: none;
+}
+
 /* A polaroid, taped rather than pinned — a pin through the top border would
    pierce the image, so the tape sits on the white margin instead. */
 .polaroid {

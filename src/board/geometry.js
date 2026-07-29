@@ -18,7 +18,17 @@ export const SECTIONS = [
   { id: "contact", label: "Contact", accent: "peach", rect: { x: 2120, y: 1160, w: 440, h: 580 } },
 ];
 
-export const OVERVIEW = { x: 0, y: 0, w: BOARD.w + FRAME * 2, h: BOARD.h + FRAME * 2 };
+/** Keepsakes — a poster and a ticket stub tacked into the two pockets of bare
+    cork the sections leave behind. They're deliberately not in SECTIONS: they
+    fill the board out visually but don't earn a place in the nav, and the
+    camera never targets them. */
+export const KEEPSAKES = [
+  { id: "keepsake-poster", rect: { x: 1375, y: 1280, w: 300, h: 480 } },
+  { id: "keepsake-show", rect: { x: 1700, y: 1290, w: 340, h: 490 } },
+  { id: "keepsake-ticket", rect: { x: 2120, y: 1500, w: 440, h: 260 } },
+];
+
+export const OVERVIEW ={ x: 0, y: 0, w: BOARD.w + FRAME * 2, h: BOARD.h + FRAME * 2 };
 
 /** Cluster rects are cork-relative; the camera works in frame-inclusive space.
     Built once so every camera target keeps a stable identity across renders —

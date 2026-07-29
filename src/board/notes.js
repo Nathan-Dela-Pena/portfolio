@@ -13,6 +13,7 @@ import ProjectBody from "../components/bodies/ProjectBody.jsx";
 import RoleBody from "../components/bodies/RoleBody.jsx";
 import StackBody from "../components/bodies/StackBody.jsx";
 import ContactBody from "../components/bodies/ContactBody.jsx";
+import ScrapBody from "../components/bodies/ScrapBody.jsx";
 
 /**
  * The registry: what binds a piece of data to the component that renders it
@@ -110,13 +111,67 @@ export const NOTES = [
     title: "Contact",
     Body: ContactBody,
   },
+
+  {
+    id: "poster-gnt",
+    section: "keepsake-poster",
+    kind: "scrap",
+    // Cropped to a stub's proportions. The source is a 2:3 poster, so this
+    // trims the side margins only — the centred tour lockup survives.
+    crop: 0.5,
+    w: 225,
+    rot: -2.4,
+    title: "Grand National Tour",
+    data: {
+      image: MEDIA.tourPoster,
+      alt: "Kendrick Lamar and SZA Grand National Tour poster",
+    },
+    Body: ScrapBody,
+  },
+  {
+    id: "photo-chromakopia",
+    section: "keepsake-show",
+    kind: "photo",
+    w: 300,
+    rot: -1.8,
+    tape: true,
+    title: "Chromakopia tour",
+    data: {
+      image: MEDIA.chromakopia,
+      caption: "Chromakopia tour",
+      alt: "The Chromakopia stage set lit green above the crowd before the show",
+    },
+    Body: PhotoBody,
+  },
+  {
+    id: "ticket-rome",
+    section: "keepsake-ticket",
+    kind: "scrap",
+    cutout: true,
+    w: 420,
+    rot: 2.6,
+    tape: true,
+    title: "Colosseum ticket, Rome",
+    data: {
+      image: MEDIA.colosseumTicket,
+      alt: "Ticket stub for the Colosseum and Roman Forum, Rome, dated 26 April 2016",
+    },
+    Body: ScrapBody,
+  },
 ];
 
 export const notesIn = (sectionId) => NOTES.filter((note) => note.section === sectionId);
 export const noteById = (id) => NOTES.find((note) => note.id === id);
 
-/** A polaroid needs no paper stock and no inner padding of its own. */
-export const shellClass = (note, lifted) =>
-  note.kind === "photo"
-    ? "polaroid"
-    : `stock-${note.stock} ${lifted ? "px-6 pb-8 pt-10 sm:px-8" : "px-5 pb-6 pt-9"}`;
+/** A polaroid and a keepsake both carry their own edge, so neither takes a
+    paper stock or inner padding. */
+export const shellClass = (note, lifted) => {
+  if (note.kind === "photo") return "polaroid";
+  if (note.kind === "scrap") {
+    return ["scrap", note.cutout && "scrap-cutout", note.crop && "scrap-crop"].filter(Boolean).join(" ");
+  }
+  return `stock-${note.stock} ${lifted ? "px-6 pb-8 pt-10 sm:px-8" : "px-5 pb-6 pt-9"}`;
+};
+
+/** Photos and keepsakes are looked at; everything else is read. */
+export const openLabel = (note) => (note.kind === "photo" || note.kind === "scrap" ? "Look closer" : "Read note");

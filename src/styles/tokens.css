@@ -17,9 +17,22 @@ html,
 body,
 #root {
   height: 100%;
+  /* dvh tracks the mobile address bar, so the room still fills the screen
+     when the browser chrome collapses. */
+  min-height: 100dvh;
+}
+
+/* The room's darkest tone, carried all the way out to the document. Overscroll
+   at either end rubber-bands against this instead of bare white, and the
+   iOS/Safari status bar picks it up too. */
+html {
+  background: #c6bfb0;
+  overscroll-behavior: none;
 }
 
 body {
+  background: #c6bfb0;
+  overscroll-behavior: none;
   font-family: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
   color: var(--ink);
 }

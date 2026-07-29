@@ -1,5 +1,5 @@
 import Cluster from "./Cluster.jsx";
-import { BOARD, FRAME, OVERVIEW, SECTIONS } from "../board/geometry.js";
+import { BOARD, FRAME, KEEPSAKES, OVERVIEW, SECTIONS } from "../board/geometry.js";
 
 /** The framed board itself, positioned entirely by the camera transform. */
 export default function Board({ camera, onLift }) {
@@ -10,7 +10,7 @@ export default function Board({ camera, onLift }) {
     >
       <div className="board-frame" style={{ width: OVERVIEW.w, height: OVERVIEW.h, padding: FRAME }}>
         <div className="board-cork relative" style={{ width: BOARD.w, height: BOARD.h }}>
-          {SECTIONS.map((section) => (
+          {[...SECTIONS, ...KEEPSAKES].map((section) => (
             <Cluster key={section.id} section={section} onLift={onLift} />
           ))}
         </div>

@@ -95,7 +95,10 @@ export default function LiftedNote({ note, closing, onClose }) {
         tabIndex={-1}
         className={`lift-box relative w-full max-w-xl ${closing ? "lift-box-out" : ""}`}
       >
-        <article className={`note note-flat ${shellClass(note, true)}`} style={{ "--rot": "0deg" }}>
+        <article
+          className={`note note-flat ${shellClass(note, true)}`}
+          style={{ "--rot": "0deg", "--crop": note.crop }}
+        >
           {/* One fastener per note, same rule as on the board: tape wins, and
               a photo is held by neither. */}
           {note.tape && <Tape />}

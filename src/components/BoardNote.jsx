@@ -1,6 +1,6 @@
 import Pin from "./primitives/Pin.jsx";
 import Tape from "./primitives/Tape.jsx";
-import { shellClass } from "../board/notes.js";
+import { openLabel, shellClass } from "../board/notes.js";
 
 /** A single item pinned to the cork. The transparent overlay button is what
     makes the whole sheet a zoom target while keeping the markup valid. */
@@ -12,14 +12,14 @@ export default function BoardNote({ note, onLift }) {
       <article
         data-note={note.id}
         className={`note ${shellClass(note, false)}`}
-        style={{ "--rot": `${note.rot}deg` }}
+        style={{ "--rot": `${note.rot}deg`, "--crop": note.crop }}
       >
       {note.tape && <Tape />}
       {!note.tape && note.kind !== "photo" && <Pin tone={note.stock} />}
         <Body data={note.data} />
         <button type="button" className="board-hit absolute inset-0" onClick={() => onLift(note.id)}>
           <span className="sr-only">
-            {note.kind === "photo" ? "Open photo" : "Read note"}: {note.title}
+            {openLabel(note)}: {note.title}
           </span>
         </button>
       </article>
